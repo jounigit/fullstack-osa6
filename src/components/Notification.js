@@ -8,9 +8,12 @@ class Notification extends React.Component {
       borderWidth: 1
     }
     const message = this.props.store.getState().message
+    const visibility = { display: message.visibility ? '' : 'none' }
     return (
-      <div style={style}>
-        {message}
+      <div style={visibility}>
+        <div style={style}>
+          {message.content}
+        </div>
       </div>
     )
   }

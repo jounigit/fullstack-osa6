@@ -1,19 +1,31 @@
 const msgAtStart = 'Message form chef'
 
-const notificationReducer = (state = msgAtStart, action) => {
+const initialState = {
+  content: msgAtStart,
+  visibility: false
+}
+
+const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'NEW_MSG':
-    //
-    break
+    return state = { content: action.content, visibility: true }
+  case 'HIDE_MSG':
+    return state = { content: '', visibility: false }
   default:
     return state
   }
 }
 
-export const showMsg = (msg) => {
+export const showMsg = (content) => {
   return {
     type: 'NEW_MSG',
-    msg
+    content
+  }
+}
+
+export const hideMsg = () => {
+  return {
+    type: 'HIDE_MSG'
   }
 }
 
