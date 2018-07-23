@@ -3,7 +3,6 @@ import { filterChange } from '../reducers/filterReducer'
 
 class Filter extends React.Component {
   handleChange = (event) => {
-    // input-kentän arvo muuttujassa event.target.value
     this.props.store.dispatch(filterChange(event.target.value.toUpperCase()))
   }
   render() {

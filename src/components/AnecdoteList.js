@@ -5,7 +5,6 @@ import Filter from '../components/Filter'
 
 class AnecdoteList extends React.Component {
   klik = (id, content) => () => {
-    console.log(id, ' :: ', content)
     this.props.store.dispatch(vote(id))
     this.props.store.dispatch(showMsg(content, 'VOTE'))
     setTimeout(() => {
@@ -13,18 +12,14 @@ class AnecdoteList extends React.Component {
     }, 5000)
   }
   render() {
+    const { anecdotes, filter } = this.props.store.getState()
     const anecdotesToShow = () => {
-      const { anecdotes, filter } = this.props.store.getState()
-      console.log('LIST:: ', filter)
-      if (filter === 'INIT') {
-        console.log('do init')
-        return anecdotes
-      }
-      else if (filter === 'FIRST') {
-        console.log('do first')
+      switch (filter) {
+      case 'FIRST':
         return anecdotes.sort((a, b) => b.votes - a.votes)
-      }
-      else {
+      case 'LAST':
+        return anecdotes.sort((a, b) => a.votes - b.votes)
+      default:
         return anecdotes
       }
     }

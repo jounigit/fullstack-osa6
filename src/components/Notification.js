@@ -8,8 +8,6 @@ class Notification extends React.Component {
       borderWidth: 1
     }
     const message = this.props.store.getState().notification
-    console.log('MSG ACTION:: ', message.actionType)
-    console.log('MSG CONTENT:: ', message.content)
     const visibility = { display: message.visibility ? '' : 'none' }
 
     const showMsg = message.actionType === 'VOTE' ?
