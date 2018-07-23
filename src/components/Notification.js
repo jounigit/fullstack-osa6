@@ -7,12 +7,18 @@ class Notification extends React.Component {
       padding: 10,
       borderWidth: 1
     }
-    const message = this.props.store.getState().message
+    const message = this.props.store.getState().notification
+    console.log('MSG ACTION:: ', message.actionType)
+    console.log('MSG CONTENT:: ', message.content)
     const visibility = { display: message.visibility ? '' : 'none' }
+
+    const showMsg = message.actionType === 'VOTE' ?
+      `you voted '${message.content}'` :
+      `you created '${message.content}'`
     return (
       <div style={visibility}>
         <div style={style}>
-          {message.content}
+          { showMsg }
         </div>
       </div>
     )
