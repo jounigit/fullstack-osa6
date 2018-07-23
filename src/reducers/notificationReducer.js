@@ -9,6 +9,7 @@ const initialState = {
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'NEW_MSG':
+    console.log('NOTIF REDUCER:: ', action.content)
     return state = { content: action.content, actionType: action.actionType, visibility: true }
   case 'HIDE_MSG':
     return state = initialState
@@ -18,6 +19,7 @@ const notificationReducer = (state = initialState, action) => {
 }
 
 export const showMsg = (content, actionType) => {
+  console.log('SHOWMSG:: ', actionType)
   return {
     type: 'NEW_MSG',
     content,

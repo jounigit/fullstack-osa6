@@ -1,18 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
 import { showMsg, hideMsg } from '../reducers/notificationReducer'
 import Filter from '../components/Filter'
 
 class AnecdoteList extends React.Component {
   klik = (id, content) => () => {
-    this.props.store.dispatch(vote(id))
-    this.props.store.dispatch(showMsg(content, 'VOTE'))
+    this.props.vote(id)
+    this.props.showMsg(content, 'VOTE')
     setTimeout(() => {
-      this.props.store.dispatch(hideMsg())
+      this.props.hideMsg()
     }, 5000)
   }
   render() {
-    const { anecdotes, filter } = this.props.store.getState()
+    const { anecdotes, filter } = this.props
     const anecdotesToShow = () => {
       switch (filter) {
       case 'FIRST':
@@ -26,7 +27,7 @@ class AnecdoteList extends React.Component {
     return (
       <div>
         <h2>Anecdotes</h2>
-        <Filter store={this.props.store} />
+        <Filter />
         {anecdotesToShow().map(anecdote =>
           <div key={anecdote.id}>
             <div>
@@ -45,4 +46,22 @@ class AnecdoteList extends React.Component {
   }
 }
 
-export default AnecdoteList
+const mapStateToProps = (state) => {
+  return {
+    anecdotes: state.anecdotes,
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = {
+  vote,
+  showMsg,
+  hideMsg
+}
+
+const ConnectedAnecdoteList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnecdoteList)
+
+export default ConnectedAnecdoteList
