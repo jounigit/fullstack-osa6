@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { filterChange } from '../reducers/filterReducer'
 
-class Filter extends React.Component {
+class VisibilityFilter extends React.Component {
   handleChange = (event) => {
     this.props.filterChange(event.target.value.toUpperCase())
   }
@@ -20,6 +20,6 @@ class Filter extends React.Component {
 }
 
 export default connect(
-  null,
+  (state) => ({ filter: state.filter }),
   { filterChange }
-)(Filter)
+)(VisibilityFilter)

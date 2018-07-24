@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
 import { showMsg, hideMsg } from '../reducers/notificationReducer'
-import Filter from '../components/Filter'
+import Filter from '../components/VisibilityFilter'
 
 class AnecdoteList extends React.Component {
   klik = (id, content) => () => {
@@ -13,22 +13,11 @@ class AnecdoteList extends React.Component {
     }, 5000)
   }
   render() {
-    const { anecdotes, filter } = this.props
-    const anecdotesToShow = () => {
-      switch (filter) {
-      case 'FIRST':
-        return anecdotes.sort((a, b) => b.votes - a.votes)
-      case 'LAST':
-        return anecdotes.sort((a, b) => a.votes - b.votes)
-      default:
-        return anecdotes
-      }
-    }
     return (
       <div>
         <h2>Anecdotes</h2>
         <Filter />
-        {anecdotesToShow().map(anecdote =>
+        {this.props.anecdotesToShow.map(anecdote =>
           <div key={anecdote.id}>
             <div>
               {anecdote.content}
@@ -46,10 +35,20 @@ class AnecdoteList extends React.Component {
   }
 }
 
+const anecdotesToShow = (anecdotes, filter) => {
+  if (filter === 'FIRST') {
+    console.log('ANECDOTE first:: ', filter)
+    return anecdotes.sort((a, b) => b.votes - a.votes)
+  }
+  if (filter === 'LAST') {
+    return anecdotes.sort((a, b) => a.votes - b.votes)
+  }
+  return anecdotes
+}
+
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes,
-    filter: state.filter
+    anecdotesToShow: anecdotesToShow(state.anecdotes, state.filter)
   }
 }
 
