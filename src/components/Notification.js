@@ -9,7 +9,7 @@ class Notification extends React.Component {
       borderWidth: 1
     }
     const { notification } = this.props
-    console.log('NOTIF:: ', notification)
+    //console.log('NOTIF:: ', notification)
     const visibility = { display: notification.visibility ? '' : 'none' }
 
     const showMsg = notification.actionType === 'VOTE' ?

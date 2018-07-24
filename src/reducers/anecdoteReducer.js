@@ -1,13 +1,13 @@
-const getId = () => (100000*Math.random()).toFixed(0)
+//const getId = () => (100000*Math.random()).toFixed(0)
 
 //const initialState = anecdotesAtStart.map(asObject)
 
 const anecdoteReducer = (store = [], action) => {
   if (action.type==='VOTE') {
-    const old = store.filter(a => a.id !==action.id)
-    const voted = store.find(a => a.id === action.id)
+    const old = store.filter(a => a.id !==action.data.id)
+    //const voted = store.find(a => a.id === action.id)
 
-    return [...old, { ...voted, votes: voted.votes+1 } ]
+    return [...old, action.data ]
   }
   if (action.type === 'CREATE') {
     return [...store, action.data]
@@ -33,10 +33,10 @@ export const createAnecdote = (data) => {
   }
 }
 
-export const vote = (id) => {
+export const vote = (data) => {
   return {
     type: 'VOTE',
-    id
+    data
   }
 }
 
