@@ -10,26 +10,26 @@ const anecdoteReducer = (store = [], action) => {
     return [...old, { ...voted, votes: voted.votes+1 } ]
   }
   if (action.type === 'CREATE') {
-    return [...store, { content: action.content, id: getId(), votes:0 }]
+    return [...store, action.data]
   }
   if (action.type === 'INIT') {
-    return action.content
+    return action.data
   }
 
   return store
 }
 
-export const anecdoteInit = (content) => {
+export const anecdoteInit = (data) => {
   return {
     type: 'INIT',
-    content
+    data
   }
 }
 
-export const createAnecdote = (content) => {
+export const createAnecdote = (data) => {
   return {
     type: 'CREATE',
-    content
+    data
   }
 }
 
