@@ -5,8 +5,12 @@ class Notification extends React.Component {
   render() {
     const style = {
       border: 'solid',
+      color: 'green',
+      borderColor: 'green',
+      marginTop: 5,
+      borderRadius: 5,
       padding: 10,
-      borderWidth: 1
+      borderWidth: 2
     }
     const { notification } = this.props
     //console.log('NOTIF:: ', notification)
