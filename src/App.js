@@ -1,5 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { notify } from './reducers/notificationReducer'
+import Notification from './components/Notification'
 
 const Menu = () => (
   <div>
@@ -12,6 +15,7 @@ const Menu = () => (
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
+    { console.log('öööö') }
     <ul>
       {anecdotes.map(anecdote =>
         <li key={anecdote.id} >
@@ -132,6 +136,7 @@ class App extends React.Component {
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
+    this.props.notify(`a new anecdote '${anecdote.content}' created!`, 10)
   }
 
   anecdoteById = (id) =>
@@ -157,6 +162,7 @@ class App extends React.Component {
         <Router>
           <div>
             <Menu />
+            <Notification />
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew}/>} />
             <Route path="/about" render={() => <About />} />
@@ -171,4 +177,11 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapDispatchToProps = {
+  notify
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App)
