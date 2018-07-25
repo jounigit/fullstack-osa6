@@ -1,11 +1,8 @@
-//const getId = () => (100000*Math.random()).toFixed(0)
-
-//const initialState = anecdotesAtStart.map(asObject)
+import anecdoteService from '../services/anecdotes'
 
 const anecdoteReducer = (store = [], action) => {
   if (action.type==='VOTE') {
     const old = store.filter(a => a.id !==action.data.id)
-    //const voted = store.find(a => a.id === action.id)
 
     return [...old, action.data ]
   }
@@ -19,10 +16,13 @@ const anecdoteReducer = (store = [], action) => {
   return store
 }
 
-export const anecdoteInit = (data) => {
-  return {
-    type: 'INIT',
-    data
+export const initAnecdotes = () => {
+  return async (dispatch) => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT',
+      data: anecdotes
+    })
   }
 }
 
