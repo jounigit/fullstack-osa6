@@ -1,21 +1,30 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { notify } from './reducers/notificationReducer'
-import Notification from './components/Notification'
+import { NavLink } from 'react-router-dom'
 
-const Menu = () => (
-  <div>
-    <Link to="/">anecdotes</Link> &nbsp;
-    <Link to="/create">create new</Link> &nbsp;
-    <Link to="/about">about</Link> &nbsp;
+const Menu = ({ style }) => (
+  <div style={ style }>
+    <NavLink
+      exact activeStyle={{
+        fontWeight: 'bold',
+        color: 'DarkRed'
+      }} to="/">anecdotes</NavLink> &nbsp;
+    <NavLink
+      exact activeStyle={{
+        fontWeight: 'bold',
+        color: 'DarkRed'
+      }} to="/create">create new</NavLink> &nbsp;
+    <NavLink
+      exact activeStyle={{
+        fontWeight: 'bold',
+        color: 'DarkRed'
+      }} to="/about">about</NavLink> &nbsp;
   </div>
 )
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    { console.log('öööö') }
     <ul>
       {anecdotes.map(anecdote =>
         <li key={anecdote.id} >
@@ -136,7 +145,6 @@ class App extends React.Component {
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
-    this.props.notify(`a new anecdote '${anecdote.content}' created!`, 10)
   }
 
   anecdoteById = (id) =>
@@ -156,13 +164,22 @@ class App extends React.Component {
   }
 
   render() {
+    const menuStyle = {
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      color: 'white',
+      border: 'solid',
+      backgroundColor: 'DarkKhaki',
+      borderColor: 'olive',
+      margin: 5,
+      padding: 10
+    }
     return (
       <div>
         <h1>Software anecdotes</h1>
         <Router>
           <div>
-            <Menu />
-            <Notification />
+            <Menu style={menuStyle} />
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew}/>} />
             <Route path="/about" render={() => <About />} />
@@ -177,11 +194,4 @@ class App extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  notify
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(App)
+export default App
