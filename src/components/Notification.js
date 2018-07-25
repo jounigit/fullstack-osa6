@@ -11,14 +11,10 @@ class Notification extends React.Component {
     const { notification } = this.props
     //console.log('NOTIF:: ', notification)
     const visibility = { display: notification.visibility ? '' : 'none' }
-
-    const showMsg = notification.actionType === 'VOTE' ?
-      `you voted '${notification.content}'` :
-      `you created '${notification.content}'`
     return (
       <div style={visibility}>
         <div style={style}>
-          { showMsg }
+          { notification.content }
         </div>
       </div>
     )
