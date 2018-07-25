@@ -6,8 +6,9 @@ import Filter from '../components/VisibilityFilter'
 
 class AnecdoteList extends React.Component {
   klik = (id, content) => () => {
+
     this.props.vote(id)
-    this.props.showMsg(content, 'VOTE')
+    this.props.showMsg(`you voted '${content}'`)
     setTimeout(() => {
       this.props.hideMsg()
     }, 5000)
