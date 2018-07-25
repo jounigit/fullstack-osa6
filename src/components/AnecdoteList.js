@@ -3,15 +3,10 @@ import { connect } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
 import { showMsg, hideMsg } from '../reducers/notificationReducer'
 import Filter from '../components/VisibilityFilter'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
-  klik = (id, content) => async () => {
-    const anecdotes = await anecdoteService.getAll()
-    const anecdote = anecdotes.find(a => a.id === id)
-    const toUpdate = { ...anecdote, votes: anecdote.votes+1 }
-    const changedAnecdote = await anecdoteService.update(id, toUpdate)
-    this.props.vote(changedAnecdote)
+  klik = (id, content) => () => {
+    this.props.vote(id)
     this.props.showMsg(content, 'VOTE')
     setTimeout(() => {
       this.props.hideMsg()
