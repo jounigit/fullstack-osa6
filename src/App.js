@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
+import { Container, Table } from 'semantic-ui-react'
 
 const Menu = ({ style }) => (
   <div style={ style }>
@@ -25,12 +26,16 @@ const Menu = ({ style }) => (
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote =>
-        <li key={anecdote.id} >
-          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>)}
-    </ul>
+    <Table striped celled>
+      <Table.Body>
+        {anecdotes.map(anecdote =>
+          <Table.Row key={anecdote.id} >
+            <Table.Cell>
+              <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+            </Table.Cell>
+          </Table.Row>)}
+      </Table.Body>
+    </Table>
   </div>
 )
 
@@ -175,7 +180,7 @@ class App extends React.Component {
       padding: 10
     }
     return (
-      <div>
+      <Container>
         <h1>Software anecdotes</h1>
         <Router>
           <div>
@@ -189,7 +194,7 @@ class App extends React.Component {
           </div>
         </Router>
         <Footer />
-      </div>
+      </Container>
     )
   }
 }
