@@ -2,9 +2,10 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { Container, Table, Grid, Image } from 'semantic-ui-react'
+import './App.css'
 
-const Menu = ({ style }) => (
-  <div style={ style }>
+const Menu = () => (
+  <div className="menu">
     <NavLink
       exact activeStyle={{
         fontWeight: 'bold',
@@ -44,9 +45,7 @@ const About = () => (
     <h2>About anecdote app</h2>
     <Grid>
       <Grid.Row>
-        <Grid.Column width={1}>
-        </Grid.Column>
-        <Grid.Column width={9}>
+        <Grid.Column width={10}  style={ { paddingLeft: 50 } }>
           <p>According to Wikipedia:</p>
 
           <em>An anecdote is a brief, revealing account of an individual person or an incident.
@@ -56,7 +55,7 @@ const About = () => (
 
           <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
         </Grid.Column>
-        <Grid.Column width={5}>
+        <Grid.Column width={6}>
           <Image src='/images/Alan_Turing.jpg' />
         </Grid.Column>
       </Grid.Row>
@@ -65,7 +64,7 @@ const About = () => (
 )
 
 const Footer = () => (
-  <div>
+  <div style={ { marginTop: 50 } }>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
 
     See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
@@ -180,20 +179,12 @@ class App extends React.Component {
   }
 
   render() {
-    const menuStyle = {
-      fontWeight: 'bold',
-      textDecoration: 'none',
-      color: 'white',
-      backgroundColor: 'DarkKhaki',
-      margin: 5,
-      padding: 10
-    }
     return (
       <Container>
         <h1>Software anecdotes</h1>
         <Router>
           <div>
-            <Menu style={menuStyle} />
+            <Menu />
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew}/>} />
             <Route path="/about" render={() => <About />} />
