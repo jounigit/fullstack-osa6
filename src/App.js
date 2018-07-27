@@ -2,9 +2,10 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { Container, Table } from 'semantic-ui-react'
+import './App.css'
 
-const Menu = ({ style }) => (
-  <div style={ style }>
+const Menu = () => (
+  <div className="menu">
     <NavLink
       exact activeStyle={{
         fontWeight: 'bold',
@@ -54,7 +55,7 @@ const About = () => (
 )
 
 const Footer = () => (
-  <div>
+  <div style={ { marginTop: 50 } }>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
 
     See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
@@ -169,22 +170,12 @@ class App extends React.Component {
   }
 
   render() {
-    const menuStyle = {
-      fontWeight: 'bold',
-      textDecoration: 'none',
-      color: 'white',
-      border: 'solid',
-      backgroundColor: 'DarkKhaki',
-      borderColor: 'olive',
-      margin: 5,
-      padding: 10
-    }
     return (
       <Container>
         <h1>Software anecdotes</h1>
         <Router>
           <div>
-            <Menu style={menuStyle} />
+            <Menu />
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew}/>} />
             <Route path="/about" render={() => <About />} />
