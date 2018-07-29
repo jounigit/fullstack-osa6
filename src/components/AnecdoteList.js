@@ -36,12 +36,10 @@ class AnecdoteList extends React.Component {
 }
 
 const anecdotesToShow = (anecdotes, filter) => {
-  if (filter === 'FIRST') {
-    console.log('ANECDOTE first:: ', filter)
-    return anecdotes.sort((a, b) => b.votes - a.votes)
-  }
-  if (filter === 'LAST') {
-    return anecdotes.sort((a, b) => a.votes - b.votes)
+  const regex = new RegExp(filter, 'ig')
+  if (filter !== '') {
+    let searchAnecdotes = anecdotes.filter(a => a.content.match(regex) )
+    return searchAnecdotes
   }
   return anecdotes
 }
