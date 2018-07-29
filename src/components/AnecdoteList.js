@@ -37,11 +37,7 @@ class AnecdoteList extends React.Component {
 
 const anecdotesToShow = (anecdotes, filter) => {
   const regex = new RegExp(filter, 'ig')
-  if (filter !== '') {
-    let searchAnecdotes = anecdotes.filter(a => a.content.match(regex) )
-    return searchAnecdotes
-  }
-  return anecdotes
+  return filter === '' ? anecdotes : anecdotes.filter(a => a.content.match(regex) )
 }
 
 const mapStateToProps = (state) => {
