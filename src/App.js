@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import { Container, Table, Grid, Image } from 'semantic-ui-react'
+import { Container, Menu, Grid, Image, Form, Button, Card, Divider, Header, Icon, Segment } from 'semantic-ui-react'
 import './App.css'
-
+/*
 const Menu = () => (
   <div className="menu">
     <NavLink
@@ -20,29 +20,27 @@ const Menu = () => (
       exact activeStyle={{
         fontWeight: 'bold',
         color: 'DarkRed'
-      }} to="/about">about</NavLink> &nbsp;
+      }} to="/about">about</NavLink> &nbsp;>
   </div>
 )
+*/
+
 
 const AnecdoteList = ({ anecdotes }) => (
-  <div>
-    <h2>Anecdotes</h2>
-    <Table striped celled>
-      <Table.Body>
-        {anecdotes.map(anecdote =>
-          <Table.Row key={anecdote.id} >
-            <Table.Cell>
-              <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-            </Table.Cell>
-          </Table.Row>)}
-      </Table.Body>
-    </Table>
-  </div>
+  <Container centered style={ { width: 500 } }>
+    <Header as='h2' color='grey'>Anecdotes</Header>
+    <Segment.Group>
+      {anecdotes.map(anecdote =>
+        <Segment key={anecdote.id} >
+          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+        </Segment>)}
+    </Segment.Group>
+  </Container>
 )
 
 const About = () => (
   <div>
-    <h2>About anecdote app</h2>
+    <Header as='h2' color='grey'>About anecdote app</Header>
     <Grid>
       <Grid.Row>
         <Grid.Column width={10}  style={ { paddingLeft: 50 } }>
@@ -55,20 +53,23 @@ const About = () => (
 
           <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
         </Grid.Column>
-        <Grid.Column width={6}>
+        <Grid.Column width={5}>
           <Image src='/images/Alan_Turing.jpg' />
         </Grid.Column>
       </Grid.Row>
     </Grid>
   </div>
 )
-
+//style={ { marginTop: 50 } }
 const Footer = () => (
-  <div style={ { marginTop: 50 } }>
+  <Container textAlign='center'>
+    <Divider />
+    <p>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
 
-    See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
-  </div>
+    See<Icon link name='github' /> <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
+    </p>
+  </Container>
 )
 
 class CreateNew extends React.Component {
@@ -99,24 +100,29 @@ class CreateNew extends React.Component {
 
   render() {
     return(
-      <div>
-        <h2>create a new anecdote</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            content
-            <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
-            author
-            <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
-            url for more info
-            <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
-        </form>
-      </div>
+
+      <Card centered>
+        <Card.Content>
+          <Header as='h2' color='grey'>create a new anecdote</Header>
+        </Card.Content>
+        <Card.Content>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Field>
+              <label>content</label>
+              <input name='content' value={this.state.content} onChange={this.handleChange} />
+            </Form.Field>
+            <Form.Field>
+              <label>author</label>
+              <input name='author' value={this.state.author} onChange={this.handleChange} />
+            </Form.Field>
+            <Form.Field>
+              <label>url for more info</label>
+              <input name='info' value={this.state.info} onChange={this.handleChange} />
+            </Form.Field>
+            <Button basic color='green'>create</Button>
+          </Form>
+        </Card.Content>
+      </Card>
     )
 
   }
@@ -124,11 +130,15 @@ class CreateNew extends React.Component {
 
 const Anecdote = ({ anecdote }) => {
   return (
-    <div>
-      <h2>{anecdote.content} by {anecdote.author}</h2>
-      <div>has {anecdote.votes} votes</div>
-      <div>for more info see <a href='{anecdote.info}'>{anecdote.info}</a></div>
-    </div>
+    <Container centered style={ { width: 600 } }>
+      <Header as='h2' color='grey'>
+        <Icon color='grey' name='quote right' />
+        {anecdote.content}
+        <Header.Subheader>by {anecdote.author}</Header.Subheader>
+      </Header>
+      <Header as='h4' color='grey'>has {anecdote.votes} votes</Header>
+      <div><Icon circular color='grey' name='info' /> <a href='{anecdote.info}'>{anecdote.info}</a></div>
+    </Container>
   )
 }
 
@@ -181,10 +191,21 @@ class App extends React.Component {
   render() {
     return (
       <Container>
-        <h1>Software anecdotes</h1>
+        <Header as='h1' color='grey'>Software anecdotes</Header>
         <Router>
           <div>
-            <Menu />
+
+            <Menu stackable inverted size='large'>
+              <Menu.Item as={Link} to='/'>
+                anecdotes
+              </Menu.Item>
+              <Menu.Item as={Link} to='/create'>
+                create new
+              </Menu.Item>
+              <Menu.Item as={Link} to='/about'>
+                about
+              </Menu.Item>
+            </Menu>
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew}/>} />
             <Route path="/about" render={() => <About />} />
