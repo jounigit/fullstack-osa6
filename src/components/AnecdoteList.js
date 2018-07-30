@@ -13,16 +13,10 @@ class AnecdoteList extends React.Component {
     }, 5000)
   }
   render() {
-    const { anecdotes, filter } = this.props
     const anecdotesToShow = () => {
-      switch (filter) {
-      case 'FIRST':
-        return anecdotes.sort((a, b) => b.votes - a.votes)
-      case 'LAST':
-        return anecdotes.sort((a, b) => a.votes - b.votes)
-      default:
-        return anecdotes
-      }
+      const { anecdotes, filter } = this.props.store.getState()
+      const regex = new RegExp(filter, 'ig')
+      return filter === '' ? anecdotes : anecdotes.filter(a => a.content.match(regex) )
     }
     return (
       <div>
