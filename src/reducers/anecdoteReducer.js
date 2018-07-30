@@ -2,7 +2,7 @@ import anecdoteService from '../services/anecdotes'
 
 const anecdoteReducer = (store = [], action) => {
   if (action.type==='VOTE') {
-    const old = store.filter(a => a.id !==action.data.id)
+    const old = store.filter(a => a.id !== action.data.id)
     return [...old, action.data ]
   }
   if (action.type === 'CREATE') {
