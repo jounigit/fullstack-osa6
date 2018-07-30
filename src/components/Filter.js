@@ -3,7 +3,7 @@ import { filterChange } from '../reducers/filterReducer'
 
 class Filter extends React.Component {
   handleChange = (event) => {
-    this.props.store.dispatch(filterChange(event.target.value.toUpperCase()))
+    this.props.store.dispatch(filterChange(event.target.value))
   }
   render() {
     const style = {
