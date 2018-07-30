@@ -4,7 +4,7 @@ import { filterChange } from '../reducers/filterReducer'
 
 class Filter extends React.Component {
   handleChange = (event) => {
-    this.props.filterChange(event.target.value.toUpperCase())
+    this.props.filterChange(event.target.value)
   }
   render() {
     const style = {
